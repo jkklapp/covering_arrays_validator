@@ -31,16 +31,16 @@ def covers(matrix, v, k, N):
     '''
     # Lets fix the number of processes
     p = Pool(min(k, 12))
-    args = []
+    jobs = []
     validity = []
     for c in combinations([str(i) for i in range(k)], v):
         c = list(c)
-        args.append([[get_column(matrix, int(col)) for col in c], v**v, N])
+        jobs.append(p.apply_async(columns_cover,
+         [[[get_column(matrix, int(col)) for col in c], v**v, N]]))
         if k > 5:
             if i % 10 == 0:
-                validity += p.map(columns_cover, args)
-                args = []
-    validity += p.map(columns_cover, args)
-    #p.close()
-    #p.join()
+                validity += [j.get() for j in jobs]
+    validity += [j.get() for j in jobs]
+    p.close()
+    p.join()
     return False not in validity
