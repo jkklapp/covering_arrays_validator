@@ -29,10 +29,10 @@ def covers(matrix, v, k, t):
     '''
     p = Pool(k)
     args = []
-    for c in combinations([i for i in range(k)], v):
+    for c in combinations([str(i) for i in range(k)], v):
         c = list(c)
-        args.append([[get_column(matrix, col) for col in c], v, t])
-    validity = [p.map(columns_cover, args)]
+        args.append([[get_column(matrix, int(col)) for col in c], v, t])
+    validity = p.map(columns_cover, args)
     p.close()
     p.join()
     return False not in validity
