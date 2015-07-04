@@ -30,12 +30,17 @@ def covers(matrix, v, k, N):
         check for all v-sets of columns.
     '''
     # Lets fix the number of processes
-    p = Pool(min(k, 6))
+    p = Pool(min(k, 12))
     args = []
+    validity = []
     for c in combinations([str(i) for i in range(k)], v):
         c = list(c)
         args.append([[get_column(matrix, int(col)) for col in c], v**v, N])
-    validity = p.map(columns_cover, args)
-    p.close()
-    p.join()
+        if k > 5:
+            if i % 10 == 0:
+                validity += p.map(columns_cover, args)
+                args = []
+    validity += p.map(columns_cover, args)
+    #p.close()
+    #p.join()
     return False not in validity
