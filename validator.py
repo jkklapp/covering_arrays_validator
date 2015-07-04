@@ -17,7 +17,7 @@ def columns_cover(args=[]):
     N = args[2]
     found_combinations = []
     for i in range(N):
-        input = [c[i] for c in columns]
+        input = ''.join([c[i] for c in columns])
         if input not in found_combinations:
             found_combinations.append(input)
             if len(found_combinations) == all_possible_combs:
