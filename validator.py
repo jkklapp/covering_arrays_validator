@@ -13,14 +13,14 @@ def columns_cover(args=[]):
         if they have all possible v-tuples.
     '''
     columns = args[0]
-    v = args[1]
+    all_possible_combs = args[1]
     N = args[2]
     found_combinations = []
     for i in range(N):
         input = [c[i] for c in columns]
         if input not in found_combinations:
             found_combinations.append(input)
-            if len(found_combinations) == v**v:
+            if len(found_combinations) == all_possible_combs:
                 return True
     return False
 
@@ -34,7 +34,7 @@ def covers(matrix, v, k, N):
     args = []
     for c in combinations([str(i) for i in range(k)], v):
         c = list(c)
-        args.append([[get_column(matrix, int(col)) for col in c], v, N])
+        args.append([[get_column(matrix, int(col)) for col in c], v**v, N])
     validity = p.map(columns_cover, args)
     p.close()
     p.join()
