@@ -22,7 +22,7 @@ def read_file_to_array(fileName):
     '''
     array = []
     f = open(fileName, 'r')
-    t = int(f.readline())
-    for i in range(t):
+    N = int(f.readline())
+    for i in range(N):
         array.append(parse_line_into_vector(f.readline()))
-    return t, array
+    return N, array

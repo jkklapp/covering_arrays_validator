@@ -14,24 +14,27 @@ def columns_cover(args=[]):
     '''
     columns = args[0]
     v = args[1]
-    t = args[2]
+    N = args[2]
     found_combinations = []
-    for i in range(t):
+    for i in range(N):
         input = [c[i] for c in columns]
         if input not in found_combinations:
             found_combinations.append(input)
-    return len(found_combinations) == v**v
+            if len(found_combinations) == v**v:
+                return True
+    return False
 
-def covers(matrix, v, k, t):
+def covers(matrix, v, k, N):
     '''
         Given a matrix computes the covering
         check for all v-sets of columns.
     '''
-    p = Pool(k)
+    # Lets fix the number of processes
+    p = Pool(min(k, 6))
     args = []
     for c in combinations([str(i) for i in range(k)], v):
         c = list(c)
-        args.append([[get_column(matrix, int(col)) for col in c], v, t])
+        args.append([[get_column(matrix, int(col)) for col in c], v, N])
     validity = p.map(columns_cover, args)
     p.close()
     p.join()
