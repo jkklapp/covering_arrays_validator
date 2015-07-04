@@ -16,7 +16,7 @@ def columns_cover(columns, v, t):
         input = [c[i] for c in columns]
         if input not in found_combinations:
             found_combinations.append(input)
-    return len(found_combinations) == v*v
+    return len(found_combinations) == v**v
 
 def covers(matrix, v, k, t):
     '''
