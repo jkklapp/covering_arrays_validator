@@ -13,4 +13,4 @@ if __name__ == "__main__":
     filename = sys.argv[1]
     N, array = read_file_to_array(filename)
     t, v, k = get_parameters_from_name(filename)
-    print "Valid" if covers(array, v, k, N) else "Invalid"
+    print "Valid" if covers(array, v, k, t, N) else "Invalid"

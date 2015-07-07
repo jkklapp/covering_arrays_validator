@@ -24,7 +24,7 @@ def columns_cover(args=[]):
                 return True
     return False
 
-def covers(matrix, v, k, N):
+def covers(matrix, v, k, t, N):
     '''
         Given a matrix computes the covering
         check for all v-sets of columns.
@@ -33,10 +33,10 @@ def covers(matrix, v, k, N):
     p = Pool(min(k, 12))
     jobs = []
     validity = []
-    for c in combinations([str(i) for i in range(k)], v):
+    for c in combinations([str(i) for i in range(k)], t):
         c = list(c)
         jobs.append(p.apply_async(columns_cover,
-         [[[get_column(matrix, int(col)) for col in c], v**v, N]]))
+         [[[get_column(matrix, int(col)) for col in c], v**t, N]]))
         if k > 5:
             if i % 10 == 0:
                 validity += [j.get() for j in jobs]
